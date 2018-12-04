@@ -14,7 +14,7 @@ import static ercanduman.notetakingapp.Configuration.DATABASE_VERSION;
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase instance;
 
-    public abstract DatabaseAccessObject dao();
+    public abstract NoteDatabaseAccessObject dao();
 
     // Synchronized means only thread can access to instance at a time
     // also prevents create two instance at a time

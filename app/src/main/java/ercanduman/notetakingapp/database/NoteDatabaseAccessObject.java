@@ -11,7 +11,7 @@ import androidx.room.Update;
 import ercanduman.notetakingapp.database.model.Note;
 
 @Dao
-public interface DatabaseAccessObject {
+public interface NoteDatabaseAccessObject {
     @Insert
     void insert(Note note);
 
