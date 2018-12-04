@@ -11,7 +11,7 @@ import androidx.room.Update;
 import ercanduman.notetakingapp.database.model.Note;
 
 @Dao
-public interface NoteDatabaseAccessObject {
+public interface NoteDao {
     @Insert
     void insert(Note note);
 
@@ -24,6 +24,6 @@ public interface NoteDatabaseAccessObject {
     @Query("DELETE FROM Note")
     void deleteAllNotes();
 
-    @Query("SELECT * FROM Note ORDER BY date DESC")
+    @Query("SELECT * FROM Note ORDER BY id DESC")
     LiveData<List<Note>> getAllNotes();
 }

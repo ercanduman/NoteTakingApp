@@ -7,11 +7,11 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import ercanduman.notetakingapp.database.NoteDatabase;
-import ercanduman.notetakingapp.database.NoteDatabaseAccessObject;
+import ercanduman.notetakingapp.database.NoteDao;
 import ercanduman.notetakingapp.database.model.Note;
 
 public class NoteRepository {
-    private NoteDatabaseAccessObject dao;
+    private NoteDao dao;
     private LiveData<List<Note>> allNotes;
 
     public NoteRepository(Context context) {
@@ -46,9 +46,9 @@ public class NoteRepository {
     }
 
     private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Void> {
-        private NoteDatabaseAccessObject noteDao;
+        private NoteDao noteDao;
 
-        private InsertNoteAsyncTask(NoteDatabaseAccessObject dao) {
+        private InsertNoteAsyncTask(NoteDao dao) {
             this.noteDao = dao;
         }
 
@@ -60,9 +60,9 @@ public class NoteRepository {
     }
 
     private static class UpdateNoteAsyncTask extends AsyncTask<Note, Void, Void> {
-        private NoteDatabaseAccessObject noteDao;
+        private NoteDao noteDao;
 
-        private UpdateNoteAsyncTask(NoteDatabaseAccessObject dao) {
+        private UpdateNoteAsyncTask(NoteDao dao) {
             this.noteDao = dao;
         }
 
@@ -74,9 +74,9 @@ public class NoteRepository {
     }
 
     private static class DeleteNoteAsyncTask extends AsyncTask<Note, Void, Void> {
-        private NoteDatabaseAccessObject noteDao;
+        private NoteDao noteDao;
 
-        private DeleteNoteAsyncTask(NoteDatabaseAccessObject dao) {
+        private DeleteNoteAsyncTask(NoteDao dao) {
             this.noteDao = dao;
         }
 
@@ -88,9 +88,9 @@ public class NoteRepository {
     }
 
     private static class DeleteAllNotesAsyncTask extends AsyncTask<Void, Void, Void> {
-        private NoteDatabaseAccessObject noteDao;
+        private NoteDao noteDao;
 
-        private DeleteAllNotesAsyncTask(NoteDatabaseAccessObject dao) {
+        private DeleteAllNotesAsyncTask(NoteDao dao) {
             this.noteDao = dao;
         }
 

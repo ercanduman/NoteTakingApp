@@ -3,7 +3,7 @@ package ercanduman.notetakingapp;
 import android.app.Application;
 
 public class MainApplication extends Application {
-    private MainApplication context;
+    private static MainApplication context;
 
     public MainApplication() {
         if (context == null) context = this;
@@ -14,11 +14,7 @@ public class MainApplication extends Application {
         super.onCreate();
     }
 
-    public MainApplication getContext() {
+    public static MainApplication getContext() {
         return context;
-    }
-
-    public void setContext(MainApplication context) {
-        this.context = context;
     }
 }
