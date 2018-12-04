@@ -1,7 +1,5 @@
 package ercanduman.notetakingapp.database.model;
 
-import java.sql.Date;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -12,9 +10,9 @@ public class Note {
 
     private String title;
     private String description;
-    private Date date;
+    private String date;
 
-    public Note(String title, String description, Date date) {
+    public Note(String title, String description, String date) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -43,11 +41,11 @@ public class Note {
         this.description = description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
