@@ -1,6 +1,7 @@
 package ercanduman.notetakingapp.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,11 +9,22 @@ import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import ercanduman.notetakingapp.Configuration;
+import ercanduman.notetakingapp.NoteViewModel;
 import ercanduman.notetakingapp.R;
+import ercanduman.notetakingapp.database.model.Note;
+
+import static ercanduman.notetakingapp.Configuration.isDebugMode;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = Configuration.TAG;
+    private NoteViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // If you pass this keyword, then the ViewModel will be destroyed after activity destroys.
+        viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
+        viewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
+            // This method triggered every time LiveData changes.
+            // so do not need to call notifyDataSetChanged methods.
+            @Override
+            public void onChanged(List<Note> notes) {
+                // TODO: 04.12.2018 update recyclerView here
+                if (isDebugMode) Log.d(TAG, "onChanged: called...");
+                Log.d(TAG, "onChanged: notes.size: " + notes.size());
+            }
+        });
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

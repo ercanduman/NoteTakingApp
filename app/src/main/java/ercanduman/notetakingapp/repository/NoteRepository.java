@@ -1,21 +1,21 @@
 package ercanduman.notetakingapp.repository;
 
-import android.content.Context;
+import android.app.Application;
 import android.os.AsyncTask;
 
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
-import ercanduman.notetakingapp.database.NoteDatabase;
 import ercanduman.notetakingapp.database.NoteDao;
+import ercanduman.notetakingapp.database.NoteDatabase;
 import ercanduman.notetakingapp.database.model.Note;
 
 public class NoteRepository {
     private NoteDao dao;
     private LiveData<List<Note>> allNotes;
 
-    public NoteRepository(Context context) {
-        NoteDatabase database = NoteDatabase.getInstance(context);
+    public NoteRepository(Application application) {
+        NoteDatabase database = NoteDatabase.getInstance(application);
         dao = database.dao();
         allNotes = dao.getAllNotes();
     }

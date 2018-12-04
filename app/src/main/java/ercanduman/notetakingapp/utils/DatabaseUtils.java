@@ -47,7 +47,8 @@ public class DatabaseUtils extends AsyncTask<Void, Void, Void> {
             while ((line = reader.readLine()) != null) {
                 lineNumber++;
                 if (isDebugMode) {
-                    Log.d(TAG, "\nimportNotes: line number: " + lineNumber + "\nline data: " + line);
+                    Log.d(TAG, "\nimportNotes: line number: " + lineNumber);
+                    Log.d(TAG, "importNotes: line data: " + line);
                 }
                 String[] lineStrings = line.split(";");
                 Note note = new Note(lineStrings[0], lineStrings[1], lineStrings[2]);
