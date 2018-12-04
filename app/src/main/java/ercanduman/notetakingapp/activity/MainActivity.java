@@ -15,12 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import ercanduman.notetakingapp.Configuration;
 import ercanduman.notetakingapp.NoteViewModel;
 import ercanduman.notetakingapp.R;
+import ercanduman.notetakingapp.adapter.NotesAdapter;
 import ercanduman.notetakingapp.database.model.Note;
-
-import static ercanduman.notetakingapp.Configuration.isDebugMode;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = Configuration.TAG;
@@ -33,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true); // adds perfomance to recyclerview
+        final NotesAdapter adapter = new NotesAdapter();
+        recyclerView.setAdapter(adapter);
+
         // If you pass this keyword, then the ViewModel will be destroyed after activity destroys.
         viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         viewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
@@ -40,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
             // so do not need to call notifyDataSetChanged methods.
             @Override
             public void onChanged(List<Note> notes) {
-                // TODO: 04.12.2018 update recyclerView here
-                if (isDebugMode) Log.d(TAG, "onChanged: called...");
+                adapter.setNotes(notes);
                 Log.d(TAG, "onChanged: notes.size: " + notes.size());
             }
         });
