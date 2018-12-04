@@ -1,4 +1,4 @@
-package ercanduman.notetakingapp;
+package ercanduman.notetakingapp.activity;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import ercanduman.notetakingapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
