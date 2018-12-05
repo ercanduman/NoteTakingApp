@@ -1,5 +1,6 @@
 package ercanduman.notetakingapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +12,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import ercanduman.notetakingapp.R;
+import ercanduman.notetakingapp.database.model.Note;
+
+import static ercanduman.notetakingapp.Configuration.EXTRA_NOTE;
+import static ercanduman.notetakingapp.utils.Utilities.getSysdate;
 
 public class AddNoteActivity extends AppCompatActivity {
     private TextView date;
@@ -23,6 +28,7 @@ public class AddNoteActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         date = findViewById(R.id.add_note_date);
+        date.setText(getSysdate());
         title = findViewById(R.id.add_note_title);
         description = findViewById(R.id.add_note_description);
 
@@ -57,7 +63,11 @@ public class AddNoteActivity extends AppCompatActivity {
         String descText = description.getText().toString().trim();
 
         if (!titleText.equals("") && !descText.equals("")) {
-            // TODO: 05.12.2018 save note here
+            Note note = new Note(titleText, descText, getSysdate());
+            Intent data = new Intent();
+            data.putExtra(EXTRA_NOTE, note);
+            setResult(RESULT_OK, data);
+            finish();
             Toast.makeText(this, "Will be saved!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, getString(R.string.dialog_empty), Toast.LENGTH_SHORT).show();

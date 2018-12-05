@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -23,6 +25,8 @@ import ercanduman.notetakingapp.adapter.NotesAdapter;
 import ercanduman.notetakingapp.database.model.Note;
 import ercanduman.notetakingapp.viewmodel.NoteViewModel;
 
+import static ercanduman.notetakingapp.Configuration.EXTRA_NOTE;
+import static ercanduman.notetakingapp.Configuration.REQUEST_CODE_ADD_NOTE;
 import static ercanduman.notetakingapp.Configuration.isDebugMode;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,17 +51,17 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
-                // onChanged method triggered every time LiveData changes.
-                // so do not need to call notifyDataSetChanged methods.
+                // onChanged method triggered every time LiveData changes. so do not need to call notifyDataSetChanged methods.
                 adapter.setNotes(notes);
-                if (isDebugMode) Log.d(TAG, "onChanged: called. Notes.size: " + notes.size());
             }
         });
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddNoteActivity.class));
+                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
             }
         });
     }
@@ -82,5 +86,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_NOTE) {
+            if (data != null) {
+                Note note = data.getParcelableExtra(EXTRA_NOTE);
+                if (note != null) {
+                    viewModel.insert(note);
+                    if (isDebugMode)
+                        Log.d(TAG, "MainActivity.onActivityResult: Note info: " + note.toString());
+                    Toast.makeText(this, "Note saved successfully!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                if (isDebugMode) Log.d(TAG, "MainActivity.onActivityResult: data is null!");
+                Toast.makeText(this, "Cannot save, an error occurred...", Toast.LENGTH_SHORT).show();
+            }
+        } else Toast.makeText(this, "Note not saved", Toast.LENGTH_SHORT).show();
     }
 }

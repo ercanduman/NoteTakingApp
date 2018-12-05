@@ -16,5 +16,6 @@ public class Configuration {
 
     // Extras
     public static final String EXTRA_NOTE = "ercanduman.notetakingapp.EXTRA_NOTE";
+    public static final int REQUEST_CODE_ADD_NOTE = 9991;
 
 }
