@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Note> notes) {
                 // onChanged method triggered every time LiveData changes. so do not need to call notifyDataSetChanged methods.
-                adapter.setNotes(notes);
+                adapter.submitList(notes);
             }
         });
 
