@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -76,11 +77,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int itemPosition = viewHolder.getAdapterPosition();
-                viewModel.delete(adapter.getNoteAtPosition(itemPosition));
+                final Note deleteNote = adapter.getNoteAtPosition(itemPosition);
+
                 // Since MainActivity observes LiveData, any changes in the Note table or in ViewModel reflects in RecyclerView immediately
                 // Which means we don't need to reload table data to recyclerView or notifyDataSetChanged callbacks
-
-                Toast.makeText(MainActivity.this, "Note deleted", Toast.LENGTH_SHORT).show();
+                viewModel.delete(deleteNote);
+                Snackbar.make(viewHolder.itemView, "Note deleted", Snackbar.LENGTH_LONG)
+                            .setAction("Undo", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    viewModel.insert(deleteNote);
+                                    if (isDebugMode) Log.d(TAG, "Snackbar.onClick: Undo clicked!");
+                                }
+                            }).show();
             }
         }).attachToRecyclerView(recyclerView);
     }
