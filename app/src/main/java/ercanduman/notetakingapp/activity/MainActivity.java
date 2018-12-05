@@ -100,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_delete_all_notes) {
+            viewModel.deleteAllNotes();
+            Toast.makeText(this, "All Notes deleted.", Toast.LENGTH_SHORT).show();
             return true;
         }
 

@@ -68,11 +68,10 @@ public class AddNoteActivity extends AppCompatActivity {
             data.putExtra(EXTRA_NOTE, note);
             setResult(RESULT_OK, data);
             finish();
-            Toast.makeText(this, "Will be saved!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, getString(R.string.dialog_empty), Toast.LENGTH_SHORT).show();
-            if (titleText.isEmpty()) title.setError("This field cannot be empty!");
-            if (descText.isEmpty()) description.setError("This field cannot be empty!");
+            if (titleText.isEmpty()) title.setError(getString(R.string.dialog_error_empty));
+            if (descText.isEmpty()) description.setError(getString(R.string.dialog_error_empty));
         }
     }
 }
