@@ -12,11 +12,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import ercanduman.notetakingapp.Configuration;
@@ -64,6 +66,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) { //You can add multiple swipe direction such as ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int itemPosition = viewHolder.getAdapterPosition();
+                viewModel.delete(adapter.getNoteAtPosition(itemPosition));
+                // Since MainActivity observes LiveData, any changes in the Note table or in ViewModel reflects in RecyclerView immediately
+                // Which means we don't need to reload table data to recyclerView or notifyDataSetChanged callbacks
+
+                Toast.makeText(MainActivity.this, "Note deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -95,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
             if (data != null) {
                 Note note = data.getParcelableExtra(EXTRA_NOTE);
                 if (note != null) {
+                    // Since MainActivity observes LiveData, any changes in the Note table reflected in RecyclerView immediately
+                    // Which means we don't need to reload table data to recyclerView or notifyDataSetChanged callbacks
                     viewModel.insert(note);
                     if (isDebugMode)
                         Log.d(TAG, "MainActivity.onActivityResult: Note info: " + note.toString());

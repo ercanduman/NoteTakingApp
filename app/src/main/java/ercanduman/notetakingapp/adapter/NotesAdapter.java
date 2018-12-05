@@ -29,6 +29,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
         notifyDataSetChanged();
     }
 
+    public Note getNoteAtPosition(int position) {
+        return notes.get(position);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
         Note currentNote = notes.get(position);
