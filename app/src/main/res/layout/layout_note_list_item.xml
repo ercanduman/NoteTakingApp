@@ -19,7 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/card_margin"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"
             android:text="Created Date: 04.12.2018 12:13"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
@@ -28,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/list_item_date"
-            android:layout_margin="@dimen/card_radius"
+            android:layout_marginStart="@dimen/card_radius"
+            android:layout_marginTop="@dimen/card_radius"
             android:layout_toStartOf="@+id/list_item_id"
             android:ellipsize="end"
             android:maxLines="1"
@@ -53,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/list_item_title"
-            android:layout_margin="@dimen/card_radius"
+            android:layout_marginStart="@dimen/card_radius"
             android:text="Test Description Text"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
     </RelativeLayout>

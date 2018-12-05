@@ -2,4 +2,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="card_radius">8dp</dimen>
     <dimen name="card_margin">5dp</dimen>
+    <dimen name="add_note_margin">10dp</dimen>
 </resources>

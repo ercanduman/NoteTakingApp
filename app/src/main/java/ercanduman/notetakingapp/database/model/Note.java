@@ -1,6 +1,7 @@
 package ercanduman.notetakingapp.database.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -18,6 +19,7 @@ public class Note {
         this.date = date;
     }
 
+    @Ignore
     public Note() {
     }
 

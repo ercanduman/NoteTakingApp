@@ -1,4 +1,4 @@
-package ercanduman.notetakingapp;
+package ercanduman.notetakingapp.viewmodel;
 
 import android.app.Application;
 

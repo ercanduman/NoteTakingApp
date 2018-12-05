@@ -13,4 +13,8 @@ public class Configuration {
     // Logging vars
     public static final boolean isDebugMode = true; // TODO: 04.12.2018 false for production
     public static final String TAG = "EDUMAN";
+
+    // Extras
+    public static final String EXTRA_NOTE = "ercanduman.notetakingapp.EXTRA_NOTE";
+
 }

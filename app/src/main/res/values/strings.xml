@@ -1,4 +1,11 @@
 <resources>
+    <!--Activity names-->
     <string name="app_name">Note Taking App</string>
+    <string name="title_activity_add_note">Add Note</string>
+
+    <!--Menu actions-->
     <string name="action_settings">Settings</string>
+    <string name="action_save">Save</string>
+
+    <string name="dialog_empty">"Fields should not be NULL!"</string>
 </resources>
