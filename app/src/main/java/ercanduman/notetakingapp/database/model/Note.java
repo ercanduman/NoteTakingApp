@@ -1,11 +1,14 @@
 package ercanduman.notetakingapp.database.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Note {
+public class Note implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -49,5 +52,47 @@ public class Note {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(description);
+        parcel.writeString(date);
+    }
+
+    protected Note(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        date = in.readString();
+    }
+
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                    "id=" + id +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
+                    ", date='" + date + '\'' +
+                    '}';
     }
 }
