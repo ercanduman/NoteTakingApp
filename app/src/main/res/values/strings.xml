@@ -2,6 +2,7 @@
     <!--Activity names-->
     <string name="app_name">Note Taking App</string>
     <string name="title_activity_add_note">Add Note</string>
+    <string name="title_activity_edit_note">Edit Note</string>
 
     <!--Menu actions-->
     <string name="action_delete_all">Delete All Notes</string>

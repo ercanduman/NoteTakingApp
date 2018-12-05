@@ -30,6 +30,7 @@ import ercanduman.notetakingapp.viewmodel.NoteViewModel;
 
 import static ercanduman.notetakingapp.Configuration.EXTRA_NOTE;
 import static ercanduman.notetakingapp.Configuration.REQUEST_CODE_ADD_NOTE;
+import static ercanduman.notetakingapp.Configuration.REQUEST_CODE_EDIT_NOTE;
 import static ercanduman.notetakingapp.Configuration.isDebugMode;
 
 public class MainActivity extends AppCompatActivity {
@@ -92,6 +93,16 @@ public class MainActivity extends AppCompatActivity {
                             }).show();
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setClickListener(new NotesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Note note) {
+                Toast.makeText(MainActivity.this, note.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                intent.putExtra(EXTRA_NOTE, note);
+                startActivityForResult(intent, REQUEST_CODE_EDIT_NOTE);
+            }
+        });
     }
 
     @Override
@@ -121,21 +132,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_NOTE) {
+        if (requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK) {
             if (data != null) {
                 Note note = data.getParcelableExtra(EXTRA_NOTE);
                 if (note != null) {
                     // Since MainActivity observes LiveData, any changes in the Note table reflected in RecyclerView immediately
                     // Which means we don't need to reload table data to recyclerView or notifyDataSetChanged callbacks
                     viewModel.insert(note);
-                    if (isDebugMode)
-                        Log.d(TAG, "MainActivity.onActivityResult: Note info: " + note.toString());
                     Toast.makeText(this, "Note saved successfully!", Toast.LENGTH_SHORT).show();
+                    if (isDebugMode) {
+                        Log.d(TAG, "MainActivity.onActivityResult: Note saved");
+                        Log.d(TAG, "MainActivity.onActivityResult: Note info: " + note.toString());
+                    }
                 }
             } else {
                 if (isDebugMode) Log.d(TAG, "MainActivity.onActivityResult: data is null!");
                 Toast.makeText(this, "Cannot save, an error occurred...", Toast.LENGTH_SHORT).show();
             }
-        } else Toast.makeText(this, "Note not saved", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == REQUEST_CODE_EDIT_NOTE && resultCode == RESULT_OK) {
+            if (data != null) {
+                Note note = data.getParcelableExtra(EXTRA_NOTE);
+                if (note != null) {
+                    viewModel.update(note);
+                    Toast.makeText(this, "Note updated successfully!", Toast.LENGTH_SHORT).show();
+                    if (isDebugMode) {
+                        Log.d(TAG, "MainActivity.onActivityResult: Note updated");
+                        Log.d(TAG, "MainActivity.onActivityResult: Note info: " + note.toString());
+                    }
+                }
+            } else {
+                if (isDebugMode) Log.d(TAG, "MainActivity.onActivityResult: data is null!");
+                Toast.makeText(this, "Cannot update, an error occurred...", Toast.LENGTH_SHORT).show();
+            }
+        } else Toast.makeText(this, "Canceled...", Toast.LENGTH_SHORT).show();
     }
 }
