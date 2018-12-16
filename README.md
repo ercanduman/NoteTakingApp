@@ -1,6 +1,8 @@
 # NoteTakingApp
 This is an android Note Taking App I have created for MVVM architecture.
 
+This project also gives idea about my coding style and naming conventions for methods, variables, parameters, etc. If you are planning to send me any coding challenge, most probably I will use almost the same technique for methods and file structures available into this project.
+
 I used below diagram as reference which shows a basic form of MVVM architecture.
 
 ![mvvm-architecture](https://user-images.githubusercontent.com/11629459/49515908-3e1c3e80-f8a9-11e8-8360-2a3a4d2e6227.png)
